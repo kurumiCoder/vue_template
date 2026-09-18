@@ -1,0 +1,8 @@
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
+charset = utf-8                  # 文件编码使用 UTF-8
+indent_size = 2                  # 每级缩进 2 个空格
+indent_style = space             # 使用空格缩进，而不是 Tab
+insert_final_newline = true      # 文件末尾自动保留一个换行符
+trim_trailing_whitespace = true  # 自动删除行尾多余空格
+end_of_line = lf                 # 换行符使用 LF（Unix 风格）
+max_line_length = 100            # 建议最大行宽 100，部分编辑器和格式化工具支持 
