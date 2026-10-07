@@ -1,34 +1,8 @@
 /// <reference types="vite/client" />
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { AttributifyAttributes } from '@unocss/preset-attributify'
-
-declare interface Window {
-  // extend the window
-}
-
-// with unplugin-vue-markdown, markdown files can be treated as Vue components
-declare module '*.md' {
-  import type { DefineComponent } from 'vue'
-
-  const component: DefineComponent<object, object, any>
-  export default component
-}
-
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-
-  const component: DefineComponent<object, object, any>
-  export default component
-}
-
-declare module '@vue/runtime-dom' {
-  interface HTMLAttributes extends AttributifyAttributes {}
-}
-
+ 
+ 
 
 // 引入 Vite 内置类型（支持导入图片、CSS，以及 import.meta.hot 等）
-
 
 // // 环境变量类型声明
 

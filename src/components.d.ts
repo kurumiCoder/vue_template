@@ -13,30 +13,24 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Block: typeof import('./components/block/index.tsx')['default']
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./components/icons/IconTooling.vue')['default']
+    MarkdownWrap: typeof import('./components/MarkdownWrap.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheWelcome: typeof import('./components/TheWelcome.vue')['default']
-    WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
+    RouteTree: typeof import('./components/RouteTree.vue')['default']
+    TheCounter: typeof import('./components/TheCounter.vue')['default']
+    TheInput: typeof import('./components/TheInput.vue')['default']
+    TheThemeToggle: typeof import('./components/TheThemeToggle.vue')['default']
   }
 }
 
 // For TSX support
 declare global {
   const Block: typeof import('./components/block/index.tsx')['default']
-  const HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-  const IconCommunity: typeof import('./components/icons/IconCommunity.vue')['default']
-  const IconDocumentation: typeof import('./components/icons/IconDocumentation.vue')['default']
-  const IconEcosystem: typeof import('./components/icons/IconEcosystem.vue')['default']
-  const IconSupport: typeof import('./components/icons/IconSupport.vue')['default']
-  const IconTooling: typeof import('./components/icons/IconTooling.vue')['default']
+  const MarkdownWrap: typeof import('./components/MarkdownWrap.vue')['default']
   const RouterLink: typeof import('vue-router')['RouterLink']
   const RouterView: typeof import('vue-router')['RouterView']
-  const TheWelcome: typeof import('./components/TheWelcome.vue')['default']
-  const WelcomeItem: typeof import('./components/WelcomeItem.vue')['default']
+  const RouteTree: typeof import('./components/RouteTree.vue')['default']
+  const TheCounter: typeof import('./components/TheCounter.vue')['default']
+  const TheInput: typeof import('./components/TheInput.vue')['default']
+  const TheThemeToggle: typeof import('./components/TheThemeToggle.vue')['default']
 }

@@ -38,6 +38,34 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/[...all]': RouteRecordInfo<
+      '/[...all]',
+      '/:all(.*)',
+      { all: ParamValue<true> },
+      { all: ParamValue<false> },
+      | never
+    >,
+    '/前端/': RouteRecordInfo<
+      '/前端/',
+      '/%E5%89%8D%E7%AB%AF',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/前端/Axios': RouteRecordInfo<
+      '/前端/Axios',
+      '/%E5%89%8D%E7%AB%AF/Axios',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/前端/CSS': RouteRecordInfo<
+      '/前端/CSS',
+      '/%E5%89%8D%E7%AB%AF/CSS',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/about': RouteRecordInfo<
       '/about',
       '/about',
@@ -45,11 +73,11 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/test': RouteRecordInfo<
-      '/test',
-      '/test',
-      Record<never, never>,
-      Record<never, never>,
+    '/hi/[name]': RouteRecordInfo<
+      '/hi/[name]',
+      '/hi/:name',
+      { name: ParamValue<true> },
+      { name: ParamValue<false> },
       | never
     >,
   }
@@ -65,7 +93,7 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'src/views/index.vue': {
+    'src/pages/index.vue': {
       routes:
         | '/'
       views:
@@ -73,7 +101,39 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
-    'src/views/about.vue': {
+    'src/pages/[...all].vue': {
+      routes:
+        | '/[...all]'
+      views:
+        | never
+      pathParamNames:
+        | 'all'
+    }
+    'docs/前端/index.md': {
+      routes:
+        | '/前端/'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'docs/前端/Axios.md': {
+      routes:
+        | '/前端/Axios'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'docs/前端/CSS.md': {
+      routes:
+        | '/前端/CSS'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/pages/about.md': {
       routes:
         | '/about'
       views:
@@ -81,13 +141,13 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
-    'src/views/test.vue': {
+    'src/pages/hi/[name].vue': {
       routes:
-        | '/test'
+        | '/hi/[name]'
       views:
         | never
       pathParamNames:
-        | never
+        | 'name'
     }
   }
 

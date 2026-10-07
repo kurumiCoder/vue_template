@@ -1,6 +1,20 @@
-import type { AttributifyAttributes } from '@unocss/preset-attributify'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+declare interface Window {
+  // extend the window
+}
 
-declare module '@vue/runtime-dom' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface HTMLAttributes extends AttributifyAttributes {}
+// with unplugin-vue-markdown, markdown files can be treated as Vue components
+declare module '*.md' {
+  import type { DefineComponent } from 'vue'
+
+  const component: DefineComponent<object, object, any>
+  export default component
+}
+
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+
+  const component: DefineComponent<object, object, any>
+  export default component
 }
