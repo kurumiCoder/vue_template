@@ -19,52 +19,56 @@ function readPageTitle(file: string, fallback: string) {
     .match(/^title:\s*(.+)$/m)?.[1]
     .trim()
     .replace(/^['"]|['"]$/g, '')
-  if (title)
-    return title
-  const h1 = raw.replace(/^---[\s\S]*?\r?\n---/, '').match(/^#\s+(.+)$/m)?.[1]?.trim()
+  if (title) return title
+  const h1 = raw
+    .replace(/^---[\s\S]*?\r?\n---/, '')
+    .match(/^#\s+(.+)$/m)?.[1]
+    ?.trim()
   return h1 || fallback
 }
 
 /** 生成单个目录的 index.md；目录已无页面时删除自动生成的目录页 */
 function generateDirIndex(dir: string, routeBase: string, extensions: string[]) {
   const dirents = fs.readdirSync(dir, { withFileTypes: true })
-  const entries: { text: string, to: string }[] = []
+  const entries: { text: string; to: string }[] = []
 
   for (const entry of dirents) {
-    if (entry.name.startsWith('.') || entry.name === 'node_modules')
-      continue
+    if (entry.name.startsWith('.') || entry.name === 'node_modules') continue
 
     if (entry.isDirectory()) {
       // 子目录：内部有页面时其 index.md 已被更深层递归生成，这里直接指向目录路由
       const subIndex = path.join(dir, entry.name, 'index.md')
       if (fs.existsSync(subIndex))
-        entries.push({ text: readPageTitle(subIndex, entry.name), to: `${routeBase}/${entry.name}` })
+        entries.push({
+          text: readPageTitle(subIndex, entry.name),
+          to: `${routeBase}/${entry.name}`,
+        })
       continue
     }
 
     const ext = path.extname(entry.name)
-    if (entry.name.startsWith('index.') || !extensions.includes(ext))
-      continue
+    if (entry.name.startsWith('index.') || !extensions.includes(ext)) continue
     const slug = entry.name.slice(0, -ext.length)
-    entries.push({ text: readPageTitle(path.join(dir, entry.name), slug), to: `${routeBase}/${slug}` })
+    entries.push({
+      text: readPageTitle(path.join(dir, entry.name), slug),
+      to: `${routeBase}/${slug}`,
+    })
   }
 
   const target = path.join(dir, 'index.md')
   const existed = fs.existsSync(target) ? fs.readFileSync(target, 'utf-8') : ''
 
   // 用户手写的 index.md 不覆盖
-  if (existed && !existed.includes(DIR_INDEX_MARKER))
-    return
+  if (existed && !existed.includes(DIR_INDEX_MARKER)) return
 
   if (!entries.length) {
-    if (existed)
-      fs.unlinkSync(target)
+    if (existed) fs.unlinkSync(target)
     return
   }
 
   entries.sort((a, b) => a.text.localeCompare(b.text, 'zh'))
   const dirName = path.basename(dir)
-  const links = entries.map(e => `- <RouterLink to="${e.to}">${e.text}</RouterLink>`).join('\n')
+  const links = entries.map((e) => `- <RouterLink to="${e.to}">${e.text}</RouterLink>`).join('\n')
   const content = [
     '---',
     `title: ${dirName}`,
@@ -78,8 +82,7 @@ function generateDirIndex(dir: string, routeBase: string, extensions: string[]) 
     '',
   ].join('\n')
 
-  if (content !== existed)
-    fs.writeFileSync(target, content)
+  if (content !== existed) fs.writeFileSync(target, content)
 }
 
 /** 自底向上递归所有子目录，先处理深层目录，保证父目录能读到子目录 index.md 的标题 */
@@ -92,14 +95,13 @@ function generateAll(dir: string, routeBase: string, extensions: string[]) {
   generateDirIndex(dir, routeBase, extensions)
 }
 
-export function autoDirIndex(options: { dirs: string[], extensions?: string[] }): Plugin {
+export function autoDirIndex(options: { dirs: string[]; extensions?: string[] }): Plugin {
   const { dirs, extensions = ['.md', '.vue'] } = options
 
   const run = (root: string) => {
     for (const dir of dirs) {
       const absDir = path.resolve(root, dir)
-      if (!fs.existsSync(absDir))
-        continue
+      if (!fs.existsSync(absDir)) continue
       // 只扫描子目录，根目录本身不生成 index.md（避免与首页路由冲突）
       for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
         if (entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'node_modules')
@@ -121,8 +123,7 @@ export function autoDirIndex(options: { dirs: string[], extensions?: string[] })
       let timer: ReturnType<typeof setTimeout> | undefined
       const schedule = (file: string) => {
         const root = server.config.root
-        if (!dirs.some(dir => file.startsWith(path.resolve(root, dir) + path.sep)))
-          return
+        if (!dirs.some((dir) => file.startsWith(path.resolve(root, dir) + path.sep))) return
         clearTimeout(timer)
         timer = setTimeout(() => run(root), 100)
       }
